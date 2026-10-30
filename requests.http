@@ -1,0 +1,36 @@
+### Health check
+
+GET http://localhost:8080/api/health
+
+
+### Upload image
+
+POST http://localhost:8080/api/images/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="test.png"
+Content-Type: image/png
+
+< D:\project\image2playlist\test.png
+--boundary--
+
+### OCR test
+### Use imageId from the upload response
+POST http://localhost:8080/api/images/{{imageId}}/ocr
+
+### Process image into an Apple Music review session
+POST http://localhost:8080/api/images/{{imageId}}/process
+
+### Load a review session
+GET http://localhost:8080/api/sessions/{{sessionId}}
+
+### Create playlist after selecting one or more matches
+POST http://localhost:8080/api/sessions/{{sessionId}}/playlist
+Content-Type: application/json
+Music-User-Token: {{musicUserToken}}
+
+{
+  "playlistName": "Image2Playlist Mix",
+  "description": "Created from an image with Image2Playlist"
+}
